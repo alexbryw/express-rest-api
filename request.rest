@@ -9,3 +9,21 @@ Content-Type: application/json
     "name": "Lex",
     "userID": 3
 }
+
+###
+
+PUT http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "name": "Tex"
+}
+
+###
+
+DELETE http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "userID": 1
+}
