@@ -17,6 +17,7 @@ app.get('/api/users', function(req, res){
 //Add a new user.
 app.post('/api/users', function(req, res){
     console.log("from post add user ")
+    users.addUser(req.body.name, req.body.userID)
     console.log(req.body)
     res.send()
 })
@@ -24,6 +25,7 @@ app.post('/api/users', function(req, res){
 //Update an existing users information.
 app.put('/api/users', function(req, res){
     console.log("from put update user info")
+    users.updateUserEmail(req.body.userID, req.body.nextEmail)
     console.log(req.body)
     res.send()
 })
