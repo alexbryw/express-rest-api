@@ -33,6 +33,7 @@ app.put('/api/users', function(req, res){
 //Remove a user.
 app.delete('/api/users', function(req, res){
     console.log("Delete user")
+    users.deleteUser(req.body.userID)
     console.log(req.body)
     res.send()
 })

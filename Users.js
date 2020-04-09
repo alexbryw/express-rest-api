@@ -33,8 +33,14 @@ class Users{
         }
     }
 
-    deleteUser(){
-
+    deleteUser(inUserId){
+        const userListPosition = this.userList.findIndex(({ userId }) => userId === parseInt(inUserId))
+        console.log(userListPosition)
+        if(userListPosition >= 0){
+            this.userList.splice(userListPosition, 1)
+        } else {
+            console.log("Can not find user to delete.")
+        }
     }
 }
 
