@@ -38,4 +38,19 @@ app.delete('/api/users', function(req, res){
     res.send()
 })
 
+//Get a specific user from userID
+app.get('/api/users/:id', function(req, res){
+    console.log("get find a specific user")
+    console.log(req.params)
+    //400 bad req (wrong input or no input)
+    //404 user not found (proper input type but not found.)
+    const user = users.getUserList().find( ({ userId }) => userId === parseInt(req.params.id))
+    if(!user){
+        console.log("user not found")
+        res.status(404).send("user not found")
+        return
+    }
+    res.json(user)
+})
+
 app.listen(port, () => {console.log('Server listening on http://localhost:' + port)})
