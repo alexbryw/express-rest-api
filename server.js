@@ -11,7 +11,11 @@ app.use(express.json())
 
 //Sends back all users.
 app.get('/api/users', function(req, res){
-    res.json(users.getUserList())
+    if(!users.getUserList().length){
+        res.status(404).send("No users found.")
+    } else {
+        res.json(users.getUserList())
+    }
 })
 
 //Add a new user.
@@ -19,7 +23,7 @@ app.post('/api/users', function(req, res){
     console.log("from post add user ")
     users.addUser(req.body.name,req.body.eMail, req.body.userID, req.body.country)
     console.log(req.body)
-    res.send()
+    res.status(201).end()
 })
 
 //Update an existing users information.
@@ -27,7 +31,7 @@ app.put('/api/users/:id', function(req, res){
     console.log("from put update user info")
     users.updateUserEmail(req.params.id, req.body.nextEmail)
     console.log(req.body)
-    res.send()
+    res.end()
 })
 
 //Remove a user.
