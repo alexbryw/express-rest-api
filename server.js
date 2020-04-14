@@ -23,17 +23,17 @@ app.post('/api/users', function(req, res){
 })
 
 //Update an existing users information.
-app.put('/api/users', function(req, res){
+app.put('/api/users/:id', function(req, res){
     console.log("from put update user info")
-    users.updateUserEmail(req.body.userID, req.body.nextEmail)
+    users.updateUserEmail(req.params.id, req.body.nextEmail)
     console.log(req.body)
     res.send()
 })
 
 //Remove a user.
-app.delete('/api/users', function(req, res){
+app.delete('/api/users/:id', function(req, res){
     console.log("Delete user")
-    users.deleteUser(req.body.userID)
+    users.deleteUser(req.params.id)
     console.log(req.body)
     res.send()
 })
