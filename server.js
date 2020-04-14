@@ -17,7 +17,7 @@ app.get('/api/users', function(req, res){
 //Add a new user.
 app.post('/api/users', function(req, res){
     console.log("from post add user ")
-    users.addUser(req.body.name, req.body.userID)
+    users.addUser(req.body.name,req.body.eMail, req.body.userID, req.body.country)
     console.log(req.body)
     res.send()
 })

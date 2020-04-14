@@ -4,12 +4,14 @@ class Users{
             {
                 name: "alex",
                 eMail: "alex@alex.com",
-                userId: 1
+                userId: 1,
+                country: "Sweden"
             },
             {
                 name: "rex",
                 eMail: "rex@rex.com",
-                userId: 2
+                userId: 2,
+                country: "Belgium"
             }
         ]
     }
@@ -18,8 +20,8 @@ class Users{
         return this.userList
     }
 
-    addUser(name, userID){
-        this.userList.push({name: name, userID: userID})
+    addUser(name, eMail, userID, country){
+        this.userList.push({name: name, eMail: eMail, userID: userID, country: country})
     }
 
     updateUserEmail(inUserId, nextEmail){

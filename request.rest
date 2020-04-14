@@ -7,7 +7,9 @@ Content-Type: application/json
 
 {
     "name": "Lex",
-    "userID": 3
+    "eMail": "lex@lex.com",
+    "userID": 3,
+    "country": "USA"
 }
 
 ###
