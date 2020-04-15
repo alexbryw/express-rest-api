@@ -12,7 +12,7 @@ app.use(express.json())
 //Sends back all users.
 app.get('/api/users', function(req, res){
     if(!users.getUserList().length){
-        res.status(404).send("No users found.")
+        res.status(404).json({ msg: "No users found."})
     } else {
         res.json(users.getUserList())
     }
@@ -21,40 +21,56 @@ app.get('/api/users', function(req, res){
 //Add a new user.
 app.post('/api/users', function(req, res){
     console.log("from post add user ")
-    users.addUser(req.body.name,req.body.eMail, req.body.userID, req.body.country)
     console.log(req.body)
-    res.status(201).end()
+    if(!req.body.name || !req.body.email || !req.body.userID){
+        res.status(400).json({msg: "Provide name, email and userID to create a new user."})
+        return
+    }
+
+    if(users.addUser(req.body)){
+        res.status(201).end()
+    } else {
+        res.status(400).json({msg: "Provide a unique userID number and a unique email address."})
+    }
+    
+    console.log(req.body)
 })
 
 //Update an existing users information.
 app.put('/api/users/:id', function(req, res){
-    console.log("from put update user info")
-    users.updateUserEmail(req.params.id, req.body.nextEmail)
-    console.log(req.body)
-    res.end()
+    const user = users.findUser(req.params.id)
+    if(!user){
+        return res.status(404).json({msg: "User not found."})
+    }
+    
+    if(users.updateUserInfo(user, req.body)){
+        res.end()
+    } else{
+        res.status(400).json({msg: "Provide name, email or country to be updated."})
+    }
 })
 
 //Remove a user.
 app.delete('/api/users/:id', function(req, res){
     console.log("Delete user")
-    users.deleteUser(req.params.id)
-    console.log(req.body)
-    res.send()
+    if(users.deleteUser(req.params.id)){
+        res.end()
+    } else {
+        res.status(404).json({msg: "User not found."})
+    }
 })
 
 //Get a specific user from userID
 app.get('/api/users/:id', function(req, res){
     console.log("get find a specific user")
-    console.log(req.params)
-    //400 bad req (wrong input or no input)
-    //404 user not found (proper input type but not found.)
-    const user = users.getUserList().find( ({ userId }) => userId === parseInt(req.params.id))
+    const user = users.findUser(req.params.id)
     if(!user){
         console.log("user not found")
-        res.status(404).send("user not found")
+        res.status(404).send("User not found.")
         return
+    } else {
+        res.json(user)
     }
-    res.json(user)
 })
 
 app.listen(port, () => {console.log('Server listening on http://localhost:' + port)})

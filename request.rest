@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "name": "Lex",
-    "eMail": "lex@lex.com",
+    "email": "lex@lex.com",
     "userID": 3,
     "country": "USA"
 }
@@ -18,17 +18,14 @@ PUT http://localhost:3000/api/users/1
 Content-Type: application/json
 
 {
-    "nextEmail": "new@new.com"
+    "name": "New Name",
+    "email": "newx@new.com",
+    "country": "New Zealand"
 }
 
 ###
 
-DELETE http://localhost:3000/api/users/1
-Content-Type: application/json
-
-{
-    "userID": 1
-}
+DELETE http://localhost:3000/api/users/2
 
 ###
 
