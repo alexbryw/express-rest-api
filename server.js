@@ -26,9 +26,10 @@ app.post('/api/users', function(req, res){
         res.status(400).json({msg: "Provide name, email and userID to create a new user."})
         return
     }
-
-    if(users.addUser(req.body)){
-        res.status(201).end()
+    
+    const newUser = users.addUser(req.body)
+    if(newUser){
+        res.status(201).json(newUser)
     } else {
         res.status(400).json({msg: "Provide a unique userID number and a unique email address."})
     }
@@ -44,7 +45,7 @@ app.put('/api/users/:id', function(req, res){
     }
     
     if(users.updateUserInfo(user, req.body)){
-        res.end()
+        res.json(user)
     } else{
         res.status(400).json({msg: "Provide name, email or country to be updated."})
     }
@@ -53,8 +54,9 @@ app.put('/api/users/:id', function(req, res){
 //Remove a user.
 app.delete('/api/users/:id', function(req, res){
     console.log("Delete user")
-    if(users.deleteUser(req.params.id)){
-        res.end()
+    const deletedUser = users.deleteUser(req.params.id)
+    if(deletedUser){
+        res.json(deletedUser)
     } else {
         res.status(404).json({msg: "User not found."})
     }
@@ -67,7 +69,6 @@ app.get('/api/users/:id', function(req, res){
     if(!user){
         console.log("user not found")
         res.status(404).send("User not found.")
-        return
     } else {
         res.json(user)
     }

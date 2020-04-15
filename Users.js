@@ -34,7 +34,7 @@ class Users{
             return false
         } else {
             this.userList.push(newUser)
-            return true
+            return newUser
         }
     }
 
@@ -54,9 +54,10 @@ class Users{
     deleteUser(inUserId){
         const userListPosition = this.userList.findIndex(({ userId }) => userId == inUserId)
         console.log(userListPosition)
+        const savedDeletedUser = {... this.findUser(inUserId)}
         if(userListPosition >= 0){
             this.userList.splice(userListPosition, 1)
-            return true
+            return savedDeletedUser
         } else {
             console.log("Can not find user to delete.")
             return false

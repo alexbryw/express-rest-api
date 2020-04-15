@@ -19,7 +19,7 @@ Content-Type: application/json
 
 {
     "name": "New Name",
-    "email": "newx@new.com",
+    "email": "new@new.com",
     "country": "New Zealand"
 }
 
