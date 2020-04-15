@@ -1,5 +1,6 @@
 class Users{
     constructor(){
+        this.fs = require('fs')
         this.userList = [
             {
                 name: "Alex",
@@ -14,6 +15,7 @@ class Users{
                 country: "Belgium"
             }
         ]
+        this.loadUserList()
     }
 
     getUserList(){
@@ -72,6 +74,20 @@ class Users{
     findEmail(inEmail){
         const user = this.userList.find(({ email }) => email == inEmail)
         return user
+    }
+
+    loadUserList(){
+        //if file does not exist load userList and save it.
+        //else load userList from file.
+        console.log("from json read")
+        const data = this.fs.readFileSync('./userList.json', 'utf8')
+        const jsonData = JSON.parse(data)
+        console.log(jsonData)
+
+    }
+
+    saveUserList(){
+        //save userList to file.
     }
 }
 
