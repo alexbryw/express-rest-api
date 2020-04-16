@@ -1,17 +1,18 @@
 class Users{
     constructor(){
         this.fs = require('fs')
+        this.userIdCounter = 0
         this.userList = [
             {
                 name: "Alex",
                 email: "alex@alex.com",
-                userId: 1,
+                id: 1,
                 country: "Sweden"
             },
             {
                 name: "Rex",
                 email: "rex@rex.com",
-                userId: 2,
+                id: 2,
                 country: "Belgium"
             }
         ]
@@ -26,13 +27,13 @@ class Users{
         const newUser = {
             name: newUserInfo.name,
             email: newUserInfo.email,
-            userId: newUserInfo.userID,
+            id: this.getNewUserId(),
             country: newUserInfo.country ? newUserInfo.country : ""
         }
         console.log("from add new user")
         console.log(newUser)
-        if(this.findUser(newUserInfo.userID) || this.findEmail(newUserInfo.email)){
-            console.log("Provide a unique userID number and a unique email.")
+        if(this.findEmail(newUserInfo.email)){
+            console.log("Provide a unique email.")
             return false
         } else {
             this.userList.push(newUser)
@@ -54,7 +55,7 @@ class Users{
     }
 
     deleteUser(inUserId){
-        const userListPosition = this.userList.findIndex(({ userId }) => userId == inUserId)
+        const userListPosition = this.userList.findIndex(({ id }) => id == inUserId)
         console.log(userListPosition)
         const savedDeletedUser = {... this.findUser(inUserId)}
         if(userListPosition >= 0){
@@ -67,13 +68,28 @@ class Users{
     }
 
     findUser(inUserId){
-        const user = this.userList.find(({userId}) => userId == inUserId)
+        const user = this.userList.find(({ id }) => id == inUserId)
         return user
     }
 
     findEmail(inEmail){
         const user = this.userList.find(({ email }) => email == inEmail)
         return user
+    }
+
+    getNewUserId(){
+        if(!this.userList.length){
+            this.userIdCounter = 0
+        } else{
+            for (const user of this.userList) {
+                if(user.id > this.userIdCounter){
+                    this.userIdCounter = user.id
+                }
+            }
+        }
+        console.log("from get user new id")
+        console.log(this.userIdCounter)
+        return this.userIdCounter + 1
     }
 
     loadUserList(){

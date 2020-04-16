@@ -22,8 +22,8 @@ app.get('/api/users', function(req, res){
 app.post('/api/users', function(req, res){
     console.log("from post add user ")
     console.log(req.body)
-    if(!req.body.name || !req.body.email || !req.body.userID){
-        res.status(400).json({msg: "Provide name, email and userID to create a new user."})
+    if(!req.body.name || !req.body.email){
+        res.status(400).json({msg: "Provide name and email to create a new user."})
         return
     }
     
@@ -31,7 +31,7 @@ app.post('/api/users', function(req, res){
     if(newUser){
         res.status(201).json(newUser)
     } else {
-        res.status(400).json({msg: "Provide a unique userID number and a unique email address."})
+        res.status(400).json({msg: "Provide a unique email address."})
     }
     
     console.log(req.body)
@@ -68,7 +68,7 @@ app.get('/api/users/:id', function(req, res){
     const user = users.findUser(req.params.id)
     if(!user){
         console.log("user not found")
-        res.status(404).send("User not found.")
+        res.status(404).json({msg: "User not found."})
     } else {
         res.json(user)
     }
