@@ -1,11 +1,12 @@
 class Users{
     constructor(){
         this.fs = require('fs')
-        this.userIdCounter = 0
-        this.userList = [
+        this.userListPath = "./userList.json"
+        this.userList = []
+        this.firstUsers = [
             {
-                name: "Alex",
-                email: "alex@alex.com",
+                name: "Admin",
+                email: "admin@admin.com",
                 id: 1,
                 country: "Sweden"
             },
@@ -30,13 +31,12 @@ class Users{
             id: this.getNewUserId(),
             country: newUserInfo.country ? newUserInfo.country : ""
         }
-        console.log("from add new user")
-        console.log(newUser)
         if(this.findEmail(newUserInfo.email)){
             console.log("Provide a unique email.")
             return false
         } else {
             this.userList.push(newUser)
+            this.saveUserList()
             return newUser
         }
     }
@@ -47,6 +47,7 @@ class Users{
             user.name = newUserInfo.name ? newUserInfo.name : user.name
             user.email = newUserInfo.email ? newUserInfo.email : user.email
             user.country = newUserInfo.country ? newUserInfo.country : user.country
+            this.saveUserList()
             return true
         } else{
             console.log("Update info error.")
@@ -60,6 +61,7 @@ class Users{
         const savedDeletedUser = {... this.findUser(inUserId)}
         if(userListPosition >= 0){
             this.userList.splice(userListPosition, 1)
+            this.saveUserList()
             return savedDeletedUser
         } else {
             console.log("Can not find user to delete.")
@@ -78,32 +80,48 @@ class Users{
     }
 
     getNewUserId(){
-        if(!this.userList.length){
-            this.userIdCounter = 0
-        } else{
+        let highestUserId = 0
+        if(this.userList.length){
             for (const user of this.userList) {
-                if(user.id > this.userIdCounter){
-                    this.userIdCounter = user.id
+                if(user.id > highestUserId){
+                    highestUserId = user.id
                 }
             }
         }
         console.log("from get user new id")
-        console.log(this.userIdCounter)
-        return this.userIdCounter + 1
+        console.log(highestUserId)
+        return highestUserId + 1
     }
 
     loadUserList(){
-        //if file does not exist load userList and save it.
-        //else load userList from file.
-        console.log("from json read")
-        const data = this.fs.readFileSync('./userList.json', 'utf8')
-        const jsonData = JSON.parse(data)
-        console.log(jsonData)
+        if(!this.fs.existsSync(this.userListPath)){
+            this.userList = this.firstUsers
+            this.saveUserList()
+            console.log("userList file does not exits, will load first users.")
+            return
+        }
 
+        try {
+            const rawData =  this.fs.readFileSync(this.userListPath, "utf8")
+            const parsedData = JSON.parse(rawData)
+            this.userList = parsedData
+            console.log("userList loaded")
+
+        } catch (error) {
+            console.log("Load userList error")
+            console.error(error)
+        }
     }
 
     saveUserList(){
         //save userList to file.
+        try {
+            this.fs.writeFileSync(this.userListPath, JSON.stringify(this.userList))
+            console.log("userList saved")
+        } catch (error) {
+            console.log("save userList error")
+            console.error(error)
+        }
     }
 }
 

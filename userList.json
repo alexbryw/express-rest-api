@@ -1,1 +1,1 @@
-[{"test": "testText"}]
+[{"name":"Admin","email":"admin@admin.com","id":1,"country":"Sweden"},{"name":"Rex","email":"rex@rex.com","id":2,"country":"Belgium"}]
