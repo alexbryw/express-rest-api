@@ -30,10 +30,12 @@ function showUserList(userList){
     let userListContainer = document.querySelector(".userListContainer")
     userListContainer.innerHTML = ""
     let ulEl = document.createElement("ul")
+    ulEl.classList.add("list-group")
     console.log(userList)
     if(userList.length){
         for (const user of userList) {
             let liEl = document.createElement("li")
+            liEl.classList.add("list-group-item")
             liEl.innerText = user.name + " " + user.email + " " + user.id + " " + user.country
             ulEl.appendChild(liEl)
         }
@@ -42,23 +44,32 @@ function showUserList(userList){
 }
 
 async function addNewUser(){
+    const newUserNameInEl = document.getElementById("newUserNameIn")
+    const newUserMailInEl = document.getElementById("newUserMailIn")
+    const newUserCountryInEl = document.getElementById("newUserCountryIn")
+
     const url ="/api/users"
     console.log("add new user..")
     const newUser = {
-        name: "Web Person",
-        email: "web@web.com",
-        country: "Switzerland"
+        name: newUserNameInEl.value,
+        email: newUserMailInEl.value,
+        country: newUserCountryInEl.value
     }
     const dataBack = await sendToAPI(url ,"post", newUser)
     console.log(dataBack)
 }
 
 async function updateUser(){
-    const url = "/api/users/3"
+    const updateIdInEl = document.getElementById("updateIdIn")
+    const updateNameInEl = document.getElementById("updateNameIn")
+    const updateMailInEl = document.getElementById("updateMailIn")
+    const updateCountryInEl = document.getElementById("updateCountryIn")
+    const url = "/api/users/" + updateIdInEl.value
+    console.log(url)
     const updatedUser = {
-        name: "updated name",
-        email: "updated@mail.com",
-        country: "Uppland"
+        name: updateNameInEl.value,
+        email: updateMailInEl.value,
+        country: updateCountryInEl.value
     }
     const dataBack = await sendToAPI(url, "put", updatedUser)
     console.log(dataBack)
