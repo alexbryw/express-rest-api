@@ -64,28 +64,42 @@ async function updateUser(){
     const updateNameInEl = document.getElementById("updateNameIn")
     const updateMailInEl = document.getElementById("updateMailIn")
     const updateCountryInEl = document.getElementById("updateCountryIn")
-    const url = "/api/users/" + updateIdInEl.value
-    console.log(url)
-    const updatedUser = {
-        name: updateNameInEl.value,
-        email: updateMailInEl.value,
-        country: updateCountryInEl.value
+    if(updateIdInEl.value && updateNameInEl.value && updateMailInEl.value){
+        const url = "/api/users/" + updateIdInEl.value
+        console.log(url)
+        const updatedUser = {
+            name: updateNameInEl.value,
+            email: updateMailInEl.value,
+            country: updateCountryInEl.value
+        }
+        const dataBack = await sendToAPI(url, "put", updatedUser)
+        console.log(dataBack)
+    } else {
+        console.log("no input values.")
     }
-    const dataBack = await sendToAPI(url, "put", updatedUser)
-    console.log(dataBack)
 
 }
 
 async function deleteUser(){
-    const url = "/api/users/3"
-    const dataBack = await sendToAPI(url, "delete")
-    console.log(dataBack)
+    const deleteUserInEl = document.getElementById("deleteUserIn")
+    if(deleteUserInEl.value){
+        const url = "/api/users/" + deleteUserInEl.value
+        const dataBack = await sendToAPI(url, "delete")
+        console.log(dataBack)
+    } else {
+        console.log("no input value, enter a number.")
+    }
 }
 
 async function getUserById(){
-    const url = "/api/users/2"
-    const dataBack = await sendToAPI(url, "get")
-    console.log(dataBack)
+    const getUserIdInEl = document.getElementById("getUserIdIn")
+    if(getUserIdInEl.value){
+        const url = "/api/users/" + getUserIdInEl.value
+        const dataBack = await sendToAPI(url, "get")
+        console.log(dataBack)
+    } else{
+        console.log("no input value, enter a number.")
+    }
 }
 
 async function sendToAPI(url, method, sendData){
