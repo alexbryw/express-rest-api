@@ -20,8 +20,6 @@ app.get('/api/users', function(req, res){
 
 //Add a new user.
 app.post('/api/users', function(req, res){
-    console.log("from post add user ")
-    console.log(req.body)
     if(!req.body.name || !req.body.email){
         res.status(400).json({msg: "Provide name and email to create a new user."})
         return
@@ -33,8 +31,6 @@ app.post('/api/users', function(req, res){
     } else {
         res.status(400).json({msg: "Provide a unique email address."})
     }
-    
-    console.log(req.body)
 })
 
 //Update an existing users information.
@@ -53,7 +49,6 @@ app.put('/api/users/:id', function(req, res){
 
 //Remove a user.
 app.delete('/api/users/:id', function(req, res){
-    console.log("Delete user")
     const deletedUser = users.deleteUser(req.params.id)
     if(deletedUser){
         res.json(deletedUser)
@@ -64,10 +59,8 @@ app.delete('/api/users/:id', function(req, res){
 
 //Get a specific user from userID
 app.get('/api/users/:id', function(req, res){
-    console.log("get find a specific user")
     const user = users.findUser(req.params.id)
     if(!user){
-        console.log("user not found")
         res.status(404).json({msg: "User not found."})
     } else {
         res.json(user)
