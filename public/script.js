@@ -11,7 +11,6 @@ function addEventListeners(){
     updateUserBtn.addEventListener("click", updateUser)
     deleteUserBtn.addEventListener("click", deleteUser)
     userByIdBtn.addEventListener("click", getUserById)
-    console.log("add events running..")
 }
 
 async function getUserList(event){
@@ -31,12 +30,12 @@ function showUserList(userList){
     userListContainer.innerHTML = ""
     let ulEl = document.createElement("ul")
     ulEl.classList.add("list-group")
-    console.log(userList)
     if(userList.length){
         for (const user of userList) {
             let liEl = document.createElement("li")
             liEl.classList.add("list-group-item")
-            liEl.innerText = user.name + " " + user.email + " " + user.id + " " + user.country
+            liEl.innerHTML = 
+            "Name: " + user.name + "<br>" + "Email: " + user.email + "<br>" + "id: " + user.id + "<br>" + "Country: " + user.country
             ulEl.appendChild(liEl)
         }
         userListContainer.append(ulEl)
@@ -49,14 +48,12 @@ async function addNewUser(){
     const newUserCountryInEl = document.getElementById("newUserCountryIn")
 
     const url ="/api/users"
-    console.log("add new user..")
     const newUser = {
         name: newUserNameInEl.value,
         email: newUserMailInEl.value,
         country: newUserCountryInEl.value
     }
     const dataBack = await sendToAPI(url ,"post", newUser)
-    console.log(dataBack)
 }
 
 async function updateUser(){
@@ -66,16 +63,12 @@ async function updateUser(){
     const updateCountryInEl = document.getElementById("updateCountryIn")
     if(updateIdInEl.value && updateNameInEl.value && updateMailInEl.value){
         const url = "/api/users/" + updateIdInEl.value
-        console.log(url)
         const updatedUser = {
             name: updateNameInEl.value,
             email: updateMailInEl.value,
             country: updateCountryInEl.value
         }
         const dataBack = await sendToAPI(url, "put", updatedUser)
-        console.log(dataBack)
-    } else {
-        console.log("no input values.")
     }
 
 }
@@ -85,20 +78,26 @@ async function deleteUser(){
     if(deleteUserInEl.value){
         const url = "/api/users/" + deleteUserInEl.value
         const dataBack = await sendToAPI(url, "delete")
-        console.log(dataBack)
-    } else {
-        console.log("no input value, enter a number.")
     }
 }
 
 async function getUserById(){
     const getUserIdInEl = document.getElementById("getUserIdIn")
+    const oneUserContainerEl = document.querySelector(".oneUserContainer")
+    oneUserContainerEl.innerHTML = ""
+    let ulEl = document.createElement("ul")
+    ulEl.classList.add("list-group")
     if(getUserIdInEl.value){
         const url = "/api/users/" + getUserIdInEl.value
-        const dataBack = await sendToAPI(url, "get")
-        console.log(dataBack)
-    } else{
-        console.log("no input value, enter a number.")
+        const user = await sendToAPI(url, "get")
+        if(user.name){
+            let liEl = document.createElement("li")
+            liEl.classList.add("list-group-item")
+            liEl.innerHTML = 
+            "Name: " + user.name + "<br>" + "Email: " + user.email + "<br>" + "id: " + user.id + "<br>" + "Country: " + user.country
+            ulEl.appendChild(liEl)
+            oneUserContainerEl.append(ulEl)
+        }
     }
 }
 
@@ -110,11 +109,7 @@ async function sendToAPI(url, method, sendData){
         },
         body: JSON.stringify(sendData)
     })
-    const data2 = await response.json()
-    console.log(data2)
-    // if(data2.msg){
-    //     alert(data2.msg)
-    // }
-    return data2
+    const data = await response.json()
+    return data
 
 }

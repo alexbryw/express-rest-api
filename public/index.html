@@ -9,42 +9,58 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>User List Manager</h1>
-    <div class="outerContainer">
-        <div class="newUserContainer input-group mb-3">
-            <input class="form-control" type="text" name="name" id="newUserNameIn" placeholder="Name">
-            <input class="form-control" type="email" name="email" id="newUserMailIn" placeholder="mail@mail.com">
-            <input class="form-control" type="text" name="country" id="newUserCountryIn" placeholder="Country">
-            <div class="input-group-append">
-                <button class="newUserBtn btn btn-outline-secondary" type="button">Add New User</button>
+    <div class="outerContainer col">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">User Manager</a>
+        </div>
+        <nav class="navbar navbar-default">
+        </nav>
+        <div class="newUserContainer card mb-3">
+            <div class="input-group">
+                <input class="form-control" type="text" name="name" id="newUserNameIn" placeholder="Name">
             </div>
+            <div class="input-group">
+                <input class="form-control" type="email" name="email" id="newUserMailIn" placeholder="Email">
+            </div>
+            <div class="input-group">
+                <input class="form-control" type="text" name="country" id="newUserCountryIn" placeholder="Country">
+            </div>
+            <button class="newUserBtn btn btn-outline-primary" type="button">Add New User</button>
         </div>
 
-        <div class="updateUserContainer input-group mb-3">
-            <input class="form-control" type="number" name="userid" id="updateIdIn" placeholder="1">
-            <input class="form-control" type="text" name="name" id="updateNameIn" placeholder="Name">
-            <input class="form-control" type="email" name="email" id="updateMailIn" placeholder="mail@mail.com">
-            <input class="form-control" type="text" name="country" id="updateCountryIn" placeholder="Country">
-            <div class="input-group-append">
-                <button class="updateUserBtn btn btn-outline-secondary" type="button">Update User</button>
+        <div class="updateUserContainer card mb-3">
+            <div class="input-group">
+                <input class="form-control" type="number" name="userid" id="updateIdIn" placeholder="Id#">
             </div>
+            <div class="input-group">
+                <input class="form-control" type="text" name="name" id="updateNameIn" placeholder="Name">
+            </div>
+            <div class="input-group">
+                <input class="form-control" type="email" name="email" id="updateMailIn" placeholder="Email">
+            </div>
+            <div class="input-group">
+                <input class="form-control" type="text" name="country" id="updateCountryIn" placeholder="Country">
+            </div>
+            <button class="updateUserBtn btn btn-outline-primary" type="button">Update User</button>
         </div>
 
         <div class="deleteUserContainer input-group mb-3">
-            <input class="form-control" type="number" name="userid" id="deleteUserIn" placeholder="1">
+            <input class="form-control" type="number" name="userid" id="deleteUserIn" placeholder="Id#">
             <div class="input-group-append">
-                <button class="deleteUserBtn btn btn-outline-secondary" type="button">Delete User</button>
+                <button class="deleteUserBtn btn btn-outline-primary" type="button">Delete User</button>
             </div>
         </div>
 
         <div class="userByIdContainer input-group mb-3">
-            <input class="form-control" type="number" name="userid" id="getUserIdIn" placeholder="1">
+            <input class="form-control" type="number" name="userid" id="getUserIdIn" placeholder="Id#">
             <div class="input-group-append">
-                <button class="userByIdBtn btn btn-outline-secondary" type="button">User by ID</button>
+                <button class="userByIdBtn btn btn-outline-primary" type="button">User by ID</button>
             </div>
         </div>
+        <div class="oneUserContainer card mb-3">
+        </div>
 
-        <button class="userListBtn btn btn-outline-secondary">Get All Users</button>
+        <button class="userListBtn btn btn-outline-primary" type="button">Get All Users</button>
 
         <div class="userListContainer card">
         </div>
